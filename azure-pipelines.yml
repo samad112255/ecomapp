@@ -29,9 +29,4 @@ steps:
     displayName: 'Publish build artifacts'
 
 
-  - task: AzureWebApp@1
-    inputs:
-      azureSubscription: '<your-service-connection-name>'
-      appName: 'ecomapp'
-      package: '$(Pipeline.Workspace)/react-build/**/*.zip'
-      deploymentMethod: 'auto'
+ 
