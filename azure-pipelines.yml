@@ -1,0 +1,32 @@
+trigger:
+  - main  # or your branch name
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm run build
+    displayName: 'Install dependencies and build React app'
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: 'build'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    displayName: 'Copy build files to staging'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'react-build'
+    displayName: 'Publish build artifacts'
+
+
+ 
